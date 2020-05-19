@@ -1,6 +1,7 @@
 import generalfunc as gf
 import connectiondata as cd
 import requests, json, datetime
+import testdata as td
 
 class apirequest():
     """getsubject - выдаёт данные о контрагенте по ISN
@@ -10,6 +11,7 @@ class apirequest():
     def __init__(self, user):
         self.token = gf.GetToken(user)
         self.api_call_headers = {'Authorization': 'Bearer ' + self.token}
+        self.user = user
 
     def getsubject(self, subjisn):
         resp = []
@@ -58,6 +60,7 @@ class apirequest():
             resp.append(form)
         except:
             error = formjson['status']['message']
+            print(error)
             resp.append(error)
         return resp
 
@@ -69,7 +72,6 @@ class apirequest():
         request['email'] = str(email)
         if webhook != None:
             request['webhook'] = str(webhook)
-        print(request)
         timebeg = datetime.datetime.now()
         form_headers = self.api_call_headers
         api_call_response = requests.post(cd.test_api_url + '/payment/link/agreement', json=request, headers=form_headers,
@@ -119,3 +121,30 @@ class apirequest():
         data = respjson['status']
         resp.append(data)
         return resp
+
+    def mortsberpropcalc(self, sum):
+        calc = {}
+        calc['limit_sum'] = sum
+        resp = []
+        timebeg = datetime.datetime.now()
+        api_call_response = requests.post(cd.test_api_url + '/mortgage/sber/property/calculation/create', json=calc, headers=self.api_call_headers,
+                                          verify=False)
+        timeend = datetime.datetime.now()
+        resp.append(api_call_response.status_code)
+        resp.append((timeend - timebeg).microseconds / 1000)
+        resp.append(json.loads(api_call_response.text))
+        return resp
+
+    def mortsberpropagr(self, sum):
+        agr = td.sberprop
+        agr['limit_sum'] = sum
+        resp = []
+        timebeg = datetime.datetime.now()
+        api_call_response = requests.post(cd.test_api_url + '/mortgage/sber/property/agreemet/create', json=agr, headers=self.api_call_headers,
+                                          verify=False)
+        timeend = datetime.datetime.now()
+        resp.append(api_call_response.status_code)
+        resp.append((timeend - timebeg).microseconds / 1000)
+        resp.append(json.loads(api_call_response.text))
+        return resp
+

@@ -5,11 +5,11 @@ test_api_url = "http://mosrepora02.evropolis.ru:8080/ords/rest/api"
 # Список данных для Oauth2
 users = {
     'che': {
-        'id': 'z2rk4tGjw_Nh9GRgwZYMtA..',
-        'secret': 'a_piim769pQ8t85bvX25QQ..'
+        'id': 'Q6-5yU71T8VMUwkpBK4_1g..',
+        'secret': 'FTOowKZYLx4f1qZMxf8ztg..'
     },
     'sravni': {
-        'id': 'H5DGKWBeJ5FN-N83OpnGkA..',
-        'secret': '9kbCoZzc5YV7qXi9hm344A..'
+        'id': 'dnfeGRy0la7yahlNGHcsIg..',
+        'secret': 'Hra7SL3FpjTUQkTRPO5MEQ..'
     }
 }
